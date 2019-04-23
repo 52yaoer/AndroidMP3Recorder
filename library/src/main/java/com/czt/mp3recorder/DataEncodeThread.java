@@ -18,14 +18,14 @@ import java.util.List;
 
 public class DataEncodeThread extends HandlerThread implements AudioRecord.OnRecordPositionUpdateListener {
 	private StopHandler mHandler;
-	private static final int PROCESS_STOP = 1;
+	public static final int PROCESS_STOP = 1;
 	private byte[] mMp3Buffer;
 	private FileOutputStream mFileOutputStream;
 
 	private static class StopHandler extends Handler {
-		
+
 		private DataEncodeThread encodeThread;
-		
+
 		public StopHandler(Looper looper, DataEncodeThread encodeThread) {
 			super(looper);
 			this.encodeThread = encodeThread;
@@ -91,7 +91,7 @@ public class DataEncodeThread extends HandlerThread implements AudioRecord.OnRec
 	 * @return  从缓冲区中读取的数据的长度
 	 * 			缓冲区中没有数据时返回0 
 	 */
-	private int processData() {	
+	private int processData() {
 		if (mTasks.size() > 0) {
 			Task task = mTasks.remove(0);
 			short[] buffer = task.getData();
@@ -101,14 +101,14 @@ public class DataEncodeThread extends HandlerThread implements AudioRecord.OnRec
 				try {
 					mFileOutputStream.write(mMp3Buffer, 0, encodedSize);
 				} catch (IOException e) {
-                    e.printStackTrace();
+					e.printStackTrace();
 				}
 			}
 			return readSize;
 		}
 		return 0;
 	}
-	
+
 	/**
 	 * Flush all data left in lame buffer to file
 	 */
